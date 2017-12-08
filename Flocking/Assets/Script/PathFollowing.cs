@@ -27,7 +27,7 @@ public class PathFollowing : Vehicle {
 
     public Vector3 followPath()
     {
-        if((transform.position - targets[currentTarget].transform.position).magnitude < 10f)
+        if((transform.position - targets[currentTarget].transform.position).magnitude < 7f)
         {
             currentTarget++;
         }

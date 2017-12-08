@@ -11,11 +11,12 @@ public class FlowField : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //gets rows and columns based on terrain locations, and divide by the resolution.
+        resolution = 10;
         rows = terrain.terrainData.size.x;
         rows = Mathf.Floor(rows)/resolution;
         columns = terrain.terrainData.size.y;
         columns = Mathf.Floor(columns)/resolution;
-    
+       
         field = new Vector3[(int)rows, (int)columns];
 
         //generates a flow field of randomly generated vectors
