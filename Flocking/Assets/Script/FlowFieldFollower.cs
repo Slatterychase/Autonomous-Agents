@@ -14,7 +14,8 @@ public class FlowFieldFollower : Vehicle {
     public override void CalcSteeringForces()
     {
         ultimateForce = Vector3.zero;
-        ultimateForce = GameObject.Find("Scenemanager").GetComponent<FlowField>().findLocation(gameObject.transform.position);
+        ultimateForce += GameObject.Find("Scenemanager").GetComponent<FlowField>().findLocation((gameObject.transform.position/10));
+        //Debug.Log(ultimateForce);
 
         ApplyForce(ultimateForce);
 
