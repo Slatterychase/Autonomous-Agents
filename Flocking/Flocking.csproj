@@ -82,6 +82,8 @@
     <Compile Include="Assets\Script\CameraShifter.cs" />
     <Compile Include="Assets\Script\ExerciseManager.cs" />
     <Compile Include="Assets\Script\Flock.cs" />
+    <Compile Include="Assets\Script\FlowField.cs" />
+    <Compile Include="Assets\Script\FlowFieldFollower.cs" />
     <Compile Include="Assets\Script\FollowCamera.cs" />
     <Compile Include="Assets\Script\FollowMiddle.cs" />
     <Compile Include="Assets\Script\Human.cs" />

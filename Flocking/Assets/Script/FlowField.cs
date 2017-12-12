@@ -8,14 +8,20 @@ public class FlowField : MonoBehaviour {
     public Vector3[,] field;
     public int resolution;
     public Terrain terrain;
+    public bool areLinesActive;
+    public Material material1;
+    public Material material2;
+    public float randomAngle;
+    public Vector3 randomDirection;
 	// Use this for initialization
 	void Start () {
         //gets rows and columns based on terrain locations, and divide by the resolution.
+        areLinesActive = true;
         resolution = 10;
-        rows = terrain.terrainData.size.x;
-        rows = Mathf.Floor(rows)/resolution + 1;
-        columns = terrain.terrainData.size.y;
-        columns = Mathf.Floor(columns)/resolution + 1;
+        rows = (int)terrain.terrainData.size.x;
+        rows = rows/resolution;
+        columns = (int)terrain.terrainData.size.z;
+        columns =columns/resolution;
        
         field = new Vector3[(int)rows, (int)columns];
 
@@ -24,7 +30,10 @@ public class FlowField : MonoBehaviour {
         {
             for (int x = 0; x<columns; x++)
             {
-                field[i, x] = new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1));
+                randomAngle = Random.Range(0f, 360f);
+                randomDirection = Quaternion.Euler(0, randomAngle, 0) * Vector3.right;
+                field[i, x] = randomDirection;
+                //field[i, x] = new Vector3(1, 0, 0);
             }
         }
 
@@ -36,28 +45,70 @@ public class FlowField : MonoBehaviour {
 	}
     public Vector3 findLocation(Vector3 find)
     {
-        Debug.Log((int)Mathf.Floor(find.x));
-        Debug.Log((int)Mathf.Floor(find.z));
+        //Debug.Log((int)Mathf.Floor(find.x));
+        //Debug.Log((int)Mathf.Floor(find.z));
         //returns field vector closest to location of the agent following it
+          if ((int)find.x >= 50 && (int)find.z >= 60 || (int)find.x * -1 >= 50 && (int)find.z * -1 >= 60)
+        {
+            return field[49, 59];
+        }
+        else if ((int)find.x >= 50 || (int)find.x * -1 >= 50)
+        {
+            return field[49, Random.Range(0, 59)];
+        }
+        else if ((int)find.x >= 60 || (int)find.x * -1 >= 60)
+        {
+            return field[Random.Range(0, 49), 59];
+        }
+        else if ((int)find.z < 0 && (int)find.x < 0)
+        {
+            Debug.Log((int)find.z * -1);
+            Debug.Log((int)find.x*-1);
+            return field[((int)find.x *-1), ((int)find.z * -1)];
 
-        if((int)Mathf.Floor(find.z) < 0 && (int)Mathf.Floor(find.x) < 0)
-        {
-            return field[((int)Mathf.Floor(find.x) *-1)-1, ((int)Mathf.Floor(find.z) * -1)-1];
-
         }
-        else if ((int)Mathf.Floor(find.z) < 0)
+        else if ((int)find.z < 0)
         {
-            return field[(int)Mathf.Floor(find.x)-1, ((int)Mathf.Floor(find.z)*-1)-1];
+            return field[(int)find.x, ((int)find.z*-1)];
         }
-        else if((int)Mathf.Floor(find.x) < 0)
+        else if((int)find.x < 0)
         {
-            return field[((int)Mathf.Floor(find.x)*-1)-1, (int)Mathf.Floor(find.z)-1];
+            return field[((int)find.x*-1), (int)find.z];
         }
+      
         else
         {
-            return field[(int)Mathf.Floor(find.x)-1, (int)Mathf.Floor(find.z)-1];
+            return field[(int)find.x, (int)find.z];
         }
         
+    }
+
+    private void OnRenderObject()
+    {
+       
+        //writes lines to show vectors
+        if (areLinesActive)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int x = 0; x < columns; x++)
+                {
+                    Vector3 posBox = Vector3.zero;
+                    posBox.x = i * resolution + (resolution / 2);
+                    posBox.z = x * resolution + (resolution / 2);
+                    posBox.y = 15;
+                    material1.SetPass(0);
+                    GL.Begin(GL.LINES);
+                    GL.Vertex(posBox);
+                    GL.Vertex(posBox + (field[i, x].normalized * 5f));
+                    GL.End();
+                }
+            }
+          
+
+          
+        }
+
     }
 
 

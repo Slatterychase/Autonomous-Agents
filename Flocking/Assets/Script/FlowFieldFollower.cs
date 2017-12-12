@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class FlowFieldFollower : Vehicle {
     public Vector3 ultimateForce;
+    public Vector3 flowPosition;
+    public Terrain terrainFlow;
+    public GameObject center;
 	// Use this for initialization
 	public override void Start () {
         base.Start();
@@ -14,10 +17,28 @@ public class FlowFieldFollower : Vehicle {
     public override void CalcSteeringForces()
     {
         ultimateForce = Vector3.zero;
-        ultimateForce += GameObject.Find("Scenemanager").GetComponent<FlowField>().findLocation((gameObject.transform.position/10));
+        flowPosition = gameObject.transform.position;
+        flowPosition.x = flowPosition.x / 10;
+        flowPosition.z = flowPosition.z / 10;
+        if (transform.position.x < 0 || transform.position.x > terrain.terrainData.size.x || transform.position.z < 0 || transform.position.z > terrain.terrainData.size.z)
+        {
+            Debug.Log("Help");
+
+            ultimateForce += Seek(new Vector3(200, 0, 200));
+            
+        }
+        else
+        {
+            Debug.Log("Please work");
+            ultimateForce += GameObject.Find("Scenemanager").GetComponent<FlowField>().findLocation((flowPosition));
+        }
+        
         //Debug.Log(ultimateForce);
+        
+       
 
         ApplyForce(ultimateForce);
 
     }
+
 }
