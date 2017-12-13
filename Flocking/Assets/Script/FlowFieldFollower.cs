@@ -37,7 +37,7 @@ public class FlowFieldFollower : Vehicle {
         
        
 
-        ApplyForce(ultimateForce);
+        ApplyForce(ultimateForce*.07f);
 
     }
 

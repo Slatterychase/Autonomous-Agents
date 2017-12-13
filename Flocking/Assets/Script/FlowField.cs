@@ -26,22 +26,16 @@ public class FlowField : MonoBehaviour {
         field = new Vector3[(int)rows, (int)columns];
 
         //generates a flow field of randomly generated vectors
-        for(int i = 0; i<rows; i++)
-        {
-            for (int x = 0; x<columns; x++)
-            {
-                randomAngle = Random.Range(0f, 360f);
-                randomDirection = Quaternion.Euler(0, randomAngle, 0) * Vector3.right;
-                field[i, x] = randomDirection;
-                //field[i, x] = new Vector3(1, 0, 0);
-            }
-        }
+        randomizeFlowFIeld();
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            randomizeFlowFIeld();
+        }
 	}
     public Vector3 findLocation(Vector3 find)
     {
@@ -81,6 +75,19 @@ public class FlowField : MonoBehaviour {
             return field[(int)find.x, (int)find.z];
         }
         
+    }
+    public void randomizeFlowFIeld()
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            for (int x = 0; x < columns; x++)
+            {
+                randomAngle = Random.Range(0f, 360f);
+                randomDirection = Quaternion.Euler(0, randomAngle, 0) * Vector3.right;
+                field[i, x] = randomDirection;
+                //field[i, x] = new Vector3(1, 0, 0);
+            }
+        }
     }
 
     private void OnRenderObject()

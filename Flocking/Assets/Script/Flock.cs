@@ -96,9 +96,9 @@ public class Flock : Vehicle {
         Vector3 flee = Vector3.zero;
         foreach(GameObject agent in flock)
         {
-            if((transform.position - agent.transform.position).magnitude<10f && (transform.position - agent.transform.position).magnitude != 0)
+            if((transform.position - agent.transform.position).magnitude<30f)
             {
-                flee+= Flee(agent.transform.position);
+                flee+= Flee(agent.transform.position)* 5f;
                 
             }
             
