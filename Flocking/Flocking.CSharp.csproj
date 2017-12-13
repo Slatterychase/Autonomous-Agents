@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Script\AirResistance.cs" />
     <Compile Include="Assets\Script\CameraPosition.cs" />
     <Compile Include="Assets\Script\CameraShifter.cs" />
     <Compile Include="Assets\Script\ExerciseManager.cs" />
