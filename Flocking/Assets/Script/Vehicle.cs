@@ -163,6 +163,7 @@ public abstract class Vehicle : MonoBehaviour
     //basic wander function
     public Vector3 Wander()
     {
+
         //creates circle target center
         Vector3 future = transform.position + velocity.normalized + (velocity * 2);
         //chooses random angle from that circle

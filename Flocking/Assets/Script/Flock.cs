@@ -8,7 +8,7 @@ public class Flock : Vehicle {
     public Vector3 cohesion;
     public int neighborCountCohesion;
     public Vector3 ultimateForce;
-
+    
     public Vector3 averagePosition;
 
     public List<GameObject> obs;

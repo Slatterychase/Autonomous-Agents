@@ -36,6 +36,10 @@ public class FlowField : MonoBehaviour {
         {
             randomizeFlowFIeld();
         }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            areLinesActive = !areLinesActive;
+        }
 	}
     public Vector3 findLocation(Vector3 find)
     {
