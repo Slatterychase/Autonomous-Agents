@@ -13,15 +13,31 @@ public class Flock : Vehicle {
 
     public List<GameObject> obs;
 
+    public GameObject resistanceArea;
+
+    public bool resistanceActive = true;
+
     public override void CalcSteeringForces()
 
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            resistanceActive = !resistanceActive;
+        }
         ultimateForce = Vector3.zero;
-       ultimateForce += computeCohesion();
+       ultimateForce += computeCohesion() * .01f;
         ultimateForce += computeAlignment();
         foreach(GameObject obstacle in obs)
         {
+
             ultimateForce += AvoidObstacle(obstacle.transform.position, 5f);
+        }
+        if((resistanceArea.transform.position - gameObject.transform.position).magnitude < 50f && resistanceActive == true )
+        {
+            ultimateForce += GameObject.Find("ResistanceArea").GetComponent<AirResistance>().checkDrag(ultimateForce);
+            //Debug.Log();
+            Debug.Log(GameObject.Find("ResistanceArea").GetComponent<AirResistance>().checkDrag(ultimateForce));
+            //Debug.Log("It works thank god");
         }
         ultimateForce += Seperation();
         ultimateForce += Seek(GameObject.Find("Scenemanager").GetComponent<ExerciseManager>().target.transform.position);

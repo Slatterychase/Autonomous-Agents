@@ -22,14 +22,14 @@ public class FlowFieldFollower : Vehicle {
         flowPosition.z = flowPosition.z / 10;
         if (transform.position.x < 0 || transform.position.x > terrain.terrainData.size.x || transform.position.z < 0 || transform.position.z > terrain.terrainData.size.z)
         {
-            Debug.Log("Help");
+            
 
             ultimateForce += Seek(new Vector3(200, 0, 200));
             
         }
         else
         {
-            Debug.Log("Please work");
+            
             ultimateForce += GameObject.Find("Scenemanager").GetComponent<FlowField>().findLocation((flowPosition));
         }
         

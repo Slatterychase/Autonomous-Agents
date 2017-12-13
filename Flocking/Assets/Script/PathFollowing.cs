@@ -27,7 +27,8 @@ public class PathFollowing : Vehicle {
 
     public Vector3 followPath()
     {
-        if((transform.position - targets[currentTarget].transform.position).magnitude < 7f)
+        Debug.Log((transform.position - targets[currentTarget].transform.position).magnitude);
+        if((transform.position - targets[currentTarget].transform.position).magnitude < 50f)
         {
             currentTarget++;
         }

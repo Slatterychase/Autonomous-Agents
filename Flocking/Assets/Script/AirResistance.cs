@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AirResistance : MonoBehaviour {
-    public float c = .1f;
+    public float c = .001f;
+    public Vector3 drag;
+    public Material material1;
     
 	// Use this for initialization
 	void Start () {
@@ -17,13 +19,24 @@ public class AirResistance : MonoBehaviour {
     public Vector3 checkDrag(Vector3 velocity)
     {
         float speed = velocity.magnitude;
+        Debug.Log(speed);
         float dragMagnitude = c * speed * speed;
-        Vector3 drag = velocity;
+        drag = velocity;
         drag = drag * -1;
         drag = drag.normalized;
         drag = drag * dragMagnitude;
+        Debug.Log(drag);
         return drag;
 
 
+    }
+
+    private void OnRenderObject()
+    {
+        material1.SetPass(0);
+        GL.Begin(GL.LINES);
+        GL.Vertex(transform.position);
+        GL.Vertex((transform.position + drag) * 7f);
+        GL.End();
     }
 }
